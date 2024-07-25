@@ -131,23 +131,17 @@ understanding of what I'm doing and the quality of work is huge.
 ### Features
 
 - Directory Creation (in the current directory and in a specified location)
+- Directory Deletion
 
-More methods will be coming soon, like moving directories, deleting them,
-renaming them.
+More methods will be coming soon, like moving directories, and renaming them.
 
 ### Usage
 
 Each of the methods will print an error message to the screen if any is
 encountered.
 
-There is two ways to create a directory using the **newDirectory()** method.
-The first is to only give a directory name, so it will create a directory in
-the current directory. The second one is to specify a path for the directory.
-The method takes a String `directoryName` and optionally takes a String
-`directoryPath`.
-
 To create a new directory inside the current one, you can use **newDirectory()**
-method. The method takes a String `directoryName` which specify the name of the
+method. The method takes a String `directoryName` which specifies the name of the
 new directory.
 
 ```java
@@ -161,6 +155,11 @@ public class Example {
 }
 ```
 
+To create a new directory at a specific location, you can use the **newDirectory()**
+method. The method takes a String `directoryName` which specifies the name of the
+new directory and a String `directoryPath` which specifies the location of the new
+directory.
+
 ```java
 import GSLib.Utilities.DirectoryManager;
 
@@ -169,6 +168,21 @@ public class Example {
     String directoryName = "newDirectory";
     String directoryPath = "/path/for/new/directory/location";
     DirectoryManager.newDirectory(directoryName, directoryPath);
+  }
+}
+```
+
+To erase a directory, you can use the **deleteDirectory()** method. This method
+takes a String `directoryPath` which specifies the path to the directory to
+delete.
+
+```java
+import GSLib.Utilities.DirectoryManager;
+
+public class Example {
+  void main() {
+    String directoryPath = "/path/to/your/directory";
+    DirectoryManager.deleteDirectory(directoryPath);
   }
 }
 ```
