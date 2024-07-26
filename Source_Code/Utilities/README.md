@@ -11,7 +11,11 @@ for managing various things in your code. So far, I have these classes created:
 The File Manager package contains methods I use for managing files in my code.
 The more projects I do and the bigger they get, the more I find myself
 rewriting these methods into my code. This package is the reason I started
-working on this library.
+working on this library. My goal in having this class is to replace the need
+of having multiple File objects in my code to keep tracks of my files. Instead,
+I get to use most of the File class methods through static method calls, which
+might potentially make my code more efficient, but definitely makes it easier
+to read.
 
 ### Features
 
@@ -19,10 +23,9 @@ working on this library.
 - File Deletion: Delete a file from a path to the file
 - File Reading: Read a file from a path to the file
 - File Writing: Write content to a file using a String from your code
-- Erase Content: Completely wipe the content of a file.
-
-I would like to add a method to delete specific code from a file, a method
-to move files to another location and a method to rename files in the future.
+- Erase Content: Completely wipe the content of a file
+- File Renaming: Rename a file
+- File moving: Move a file
 
 ### Usage
 
@@ -53,8 +56,7 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    // ...
-
+    String filename = "path/to/your/file";
     String file = FileManager.readFile(filename);
   }
 }
@@ -70,8 +72,7 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    // ...
-
+    String filename = "path/to/your/file";
     String content = "Hello, World! This is my message!";
     FileManager.writeToFile(filename, content);
   }
@@ -87,8 +88,7 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    // ...
-
+    String filename = "path/to/your/file";
     FileManager.eraseContent(filename);
   }
 }
@@ -102,9 +102,39 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    // ...
-
+    String filename = "path/to/your/file";
     FileManager.deleteFile(filename);
+  }
+}
+```
+
+To rename a file, you will have to use the **renameFile()** method. This method
+takes in a String `filename` to locate the file and a String `newName` holding
+the file's new name as parameters. The new name should include the file's type.
+
+```java
+import GSLib.Utilities.FileManager;
+
+public class Example {
+  void main() {
+    String filename = "path/to/your/file";
+    FileManager.renameFile(filename, "newName");
+  }
+}
+```
+
+To move a file, you will be able to use the **moveFile()** method. This method
+takes in a String `filename` to locate the file and a String `dest` holding the
+new location of the file.
+
+```java
+import GSLib.Utilities.FileManager;
+
+public class Example {
+  void main() {
+    String filename = "path/to/your/file";
+    String dest = "new/destination/";
+    FileManager.moveFile(filename, dest);
   }
 }
 ```

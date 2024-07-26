@@ -3,7 +3,7 @@
  *   ███░░░░░███ ███░░░░░███        File Manager
  *  ███     ░░░ ░███    ░░░
  * ░███         ░░█████████         @author Gab 'Sp0k' Savard
- * ░███    █████ ░░░░░░░░███        @version 1.2
+ * ░███    █████ ░░░░░░░░███        @version 1.3
  * ░░███  ░░███  ███    ░███        since 2023-10-13
  *  ░░█████████ ░░█████████
  *   ░░░░░░░░░   ░░░░░░░░░
@@ -23,7 +23,7 @@ import java.util.Scanner;
 public class FileManager {
   /*
    * Create a new File
-   * 
+   *
    * @param filename A String holding the path for the new file
    */
   public static void newFile(String filename) {
@@ -42,9 +42,9 @@ public class FileManager {
 
   /*
    * Read files
-   * 
+   *
    * @param filename A String holding the path of the file
-   * 
+   *
    * @return String containing the text contained in the file
    */
   public static String readFile(String filename) {
@@ -69,9 +69,9 @@ public class FileManager {
 
   /*
    * Write to a file
-   * 
+   *
    * @param filename A String holding the path of the file
-   * 
+   *
    * @param text A String holding the text to add to the file
    */
   public static void writeToFile(String filename, String text) {
@@ -87,7 +87,7 @@ public class FileManager {
 
   /*
    * Erase the content of a file
-   * 
+   *
    * @param filename A String holding the path of the file
    */
   public static void eraseContent(String filename) {
@@ -101,7 +101,7 @@ public class FileManager {
 
   /*
    * Delete a file
-   * 
+   *
    * @param filename A String holding the path of the file
    */
   public static void deleteFile(String filename) {
@@ -113,6 +113,62 @@ public class FileManager {
       System.out.printf("Deleted the file: %s\n", f.getName());
     } else {
       System.out.printf("Failed to delete %s.\n", f.getName());
+    }
+  }
+
+  /*
+   * Rename a file
+   *
+   * @param filename A String holding the path to the file
+   *
+   * @param newName A String holding the new name of the file
+   */
+  public static void renameFile(String filename, String newName) {
+    // File path
+    String[] splitName = filename.split(File.pathSeparator);
+    splitName[splitName.length - 1] = newName;
+
+    StringBuilder builder = new StringBuilder();
+
+    for (int i = 0; i < splitName.length; i++) {
+      builder.append(splitName[i]);
+      if ((i + 1) < (splitName.length - 1))
+        builder.append(File.pathSeparator);
+    }
+
+    // Locate the file
+    File f = new File(filename);
+    File dest = new File(builder.toString());
+
+    // Rename the file
+    if (f.renameTo(dest)) {
+      System.out.printf("Successfully renamed file to %s!\n", f.getName());
+    } else {
+      System.out.printf("Failed to rename the file at %s\n", f.getPath());
+    }
+  }
+
+  /*
+   * Move a file
+   *
+   * @param filename A String holding the path to the file
+   *
+   * @param dest A String holding the new location
+   */
+  public static void moveFile(String filename, String dest) {
+    // File path
+    String[] splitName = filename.split(File.pathSeparator);
+    StringBuilder builder = new StringBuilder(dest);
+    builder.append(splitName[splitName.length - 1]);
+
+    // Locate the file
+    File f = new File(filename);
+    File fileDest = new File(builder.toString());
+
+    if (f.renameTo(fileDest)) {
+      System.out.printf("Successfully moved file to %s!\n", f.getPath());
+    } else {
+      System.out.printf("Failed to file the file at %s\n", f.getPath());
     }
   }
 }
