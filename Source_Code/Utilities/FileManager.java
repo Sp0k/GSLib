@@ -3,7 +3,7 @@
  *   ███░░░░░███ ███░░░░░███        File Manager
  *  ███     ░░░ ░███    ░░░
  * ░███         ░░█████████         @author Gab 'Sp0k' Savard
- * ░███    █████ ░░░░░░░░███        @version 1.3
+ * ░███    █████ ░░░░░░░░███        @version 1.4
  * ░░███  ░░███  ███    ░███        since 2023-10-13
  *  ░░█████████ ░░█████████
  *   ░░░░░░░░░   ░░░░░░░░░
@@ -19,6 +19,9 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileManager {
   /*
@@ -105,14 +108,18 @@ public class FileManager {
    * @param filename A String holding the path of the file
    */
   public static void deleteFile(String filename) {
-    // Locate the file
-    File f = new File(filename);
+    try {
+      // Locate the file
+      File f = new File(filename);
 
-    // Delete the file
-    if (f.delete()) {
-      System.out.printf("Deleted the file: %s\n", f.getName());
-    } else {
-      System.out.printf("Failed to delete %s.\n", f.getName());
+      // Delete the file
+      if (f.delete()) {
+        System.out.printf("Deleted the file: %s\n", f.getName());
+      } else {
+        System.out.printf("Failed to delete %s.\n", f.getName());
+      }
+    } catch (Exception e) {
+      System.err.printf("An error occured while deleting the file: %s\n", e.getMessage());
     }
   }
 
@@ -124,27 +131,31 @@ public class FileManager {
    * @param newName A String holding the new name of the file
    */
   public static void renameFile(String filename, String newName) {
-    // File path
-    String[] splitName = filename.split(File.pathSeparator);
-    splitName[splitName.length - 1] = newName;
+    try {
+      // File path
+      String[] splitName = filename.split(File.pathSeparator);
+      splitName[splitName.length - 1] = newName;
 
-    StringBuilder builder = new StringBuilder();
+      StringBuilder builder = new StringBuilder();
 
-    for (int i = 0; i < splitName.length; i++) {
-      builder.append(splitName[i]);
-      if ((i + 1) < (splitName.length - 1))
-        builder.append(File.pathSeparator);
-    }
+      for (int i = 0; i < splitName.length; i++) {
+        builder.append(splitName[i]);
+        if ((i + 1) < (splitName.length - 1))
+          builder.append(File.pathSeparator);
+      }
 
-    // Locate the file
-    File f = new File(filename);
-    File dest = new File(builder.toString());
+      // Locate the file
+      File f = new File(filename);
+      File dest = new File(builder.toString());
 
-    // Rename the file
-    if (f.renameTo(dest)) {
-      System.out.printf("Successfully renamed file to %s!\n", f.getName());
-    } else {
-      System.out.printf("Failed to rename the file at %s\n", f.getPath());
+      // Rename the file
+      if (f.renameTo(dest)) {
+        System.out.printf("Successfully renamed file to %s!\n", f.getName());
+      } else {
+        System.out.printf("Failed to rename the file at %s\n", f.getPath());
+      }
+    } catch (Exception e) {
+      System.err.printf("An error occured while renaming the file: %s\n", e.getMessage());
     }
   }
 
@@ -156,21 +167,57 @@ public class FileManager {
    * @param dest A String holding the new location
    */
   public static void moveFile(String filename, String dest) {
-    // File path
-    String[] splitName = filename.split(File.pathSeparator);
-    StringBuilder builder = new StringBuilder(dest);
-    if (dest.charAt(dest.length() - 1) != File.separatorChar)
-      builder.append(File.separator);
-    builder.append(splitName[splitName.length - 1]);
+    try {
+      // File path
+      String[] splitName = filename.split(File.pathSeparator);
+      StringBuilder builder = new StringBuilder(dest);
+      if (dest.charAt(dest.length() - 1) != File.separatorChar)
+        builder.append(File.separator);
+      builder.append(splitName[splitName.length - 1]);
 
-    // Locate the file
-    File f = new File(filename);
-    File fileDest = new File(builder.toString());
+      // Locate the file
+      File f = new File(filename);
+      File fileDest = new File(builder.toString());
 
-    if (f.renameTo(fileDest)) {
-      System.out.printf("Successfully moved file to %s!\n", f.getPath());
-    } else {
-      System.out.printf("Failed to file the file at %s\n", f.getPath());
+      if (f.renameTo(fileDest)) {
+        System.out.printf("Successfully moved file to %s!\n", f.getPath());
+      } else {
+        System.out.printf("Failed to file the file at %s\n", f.getPath());
+      }
+    } catch (Exception e) {
+      System.err.printf("An error occured while moving the file: %s\n", e.getMessage());
+    }
+  }
+
+  /*
+   * Copy a file
+   *
+   * @param src A String holding the path to the original file
+   *
+   * @param dest A String holding the path to the copy of the file
+   */
+  public static void copyFile(String src, String dest) {
+    try {
+      Path fromFile = Paths.get(src);
+      Path toFile = Paths.get(dest);
+
+      if (Files.notExists(fromFile)) {
+        System.out.printf("File doesn't exists: %s\n", fromFile);
+        return;
+      }
+
+      Path parent = toFile.getParent();
+      if (parent != null) {
+        if (Files.notExists(parent)) {
+          Files.createDirectories(parent);
+        }
+      }
+
+      Files.copy(fromFile, toFile);
+      System.out.printf("Successfully copied file: %s to %s!\n", fromFile, toFile);
+    } catch (IOException e) {
+      System.out.print("Failed to copy te file\n");
+      e.printStackTrace();
     }
   }
 }

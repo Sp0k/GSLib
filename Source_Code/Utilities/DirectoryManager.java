@@ -3,7 +3,7 @@
  *   ███░░░░░███ ███░░░░░███        Directory Manager
  *  ███     ░░░ ░███    ░░░
  * ░███         ░░█████████         @author Gab 'Sp0k' Savard
- * ░███    █████ ░░░░░░░░███        @version 1.1
+ * ░███    █████ ░░░░░░░░███        @version 1.2
  * ░░███  ░░███  ███    ░███        since 2024-07-25
  *  ░░█████████ ░░█████████
  *   ░░░░░░░░░   ░░░░░░░░░
@@ -14,6 +14,10 @@
 package GSLib.Utilities;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class DirectoryManager {
   /*
@@ -130,25 +134,29 @@ public class DirectoryManager {
    * @param newName A String containing the new name to the directory
    */
   public static void renameDirectory(String directoryName, String newName) {
-    // Directory path
-    String[] splitName = directoryName.split(File.separator);
-    splitName[splitName.length - 1] = newName;
+    try {
+      // Directory path
+      String[] splitName = directoryName.split(File.separator);
+      splitName[splitName.length - 1] = newName;
 
-    StringBuilder builder = new StringBuilder();
+      StringBuilder builder = new StringBuilder();
 
-    for (int i = 0; i < splitName.length; i++) {
-      builder.append(splitName[i]);
-      if ((i + 1) < (splitName.length - 1))
-        builder.append(File.separator);
-    }
+      for (int i = 0; i < splitName.length; i++) {
+        builder.append(splitName[i]);
+        if ((i + 1) < (splitName.length - 1))
+          builder.append(File.separator);
+      }
 
-    File d = new File(directoryName);
-    File newDir = new File(builder.toString());
+      File d = new File(directoryName);
+      File newDir = new File(builder.toString());
 
-    if (d.renameTo(newDir)) {
-      System.out.printf("Successfully renamed directory to %s!\n", d.getName());
-    } else {
-      System.out.printf("Failed to rename the directory at %s\n", d.getPath());
+      if (d.renameTo(newDir)) {
+        System.out.printf("Successfully renamed directory to %s!\n", d.getName());
+      } else {
+        System.out.printf("Failed to rename the directory at %s\n", d.getPath());
+      }
+    } catch (Exception e) {
+      System.err.printf("An error occurred while renaming the directory: %s\n", e.getMessage());
     }
   }
 
@@ -160,21 +168,52 @@ public class DirectoryManager {
    * @param dest A String containing the path the new location
    */
   public static void moveDirectory(String directoryName, String dest) {
-    // Directory path
-    String[] splitName = directoryName.split(File.separator);
-    StringBuilder builder = new StringBuilder(dest);
-    if (dest.charAt(dest.length() - 1) != File.separatorChar)
-      builder.append(File.separator);
-    builder.append(splitName[splitName.length - 1]);
+    try {
+      // Directory path
+      String[] splitName = directoryName.split(File.separator);
+      StringBuilder builder = new StringBuilder(dest);
+      if (dest.charAt(dest.length() - 1) != File.separatorChar)
+        builder.append(File.separator);
+      builder.append(splitName[splitName.length - 1]);
 
-    // Locate the directory
-    File d = new File(directoryName);
-    File newDir = new File(builder.toString());
+      // Locate the directory
+      File d = new File(directoryName);
+      File newDir = new File(builder.toString());
 
-    if (d.renameTo(newDir)) {
-      System.out.printf("Successfully moved directory to %s!\n", newDir.getPath());
-    } else {
-      System.out.printf("Failed to file the directory at %s\n", newDir.getPath());
+      if (d.renameTo(newDir)) {
+        System.out.printf("Successfully moved directory to %s!\n", newDir.getPath());
+      } else {
+        System.out.printf("Failed to file the directory at %s\n", newDir.getPath());
+      }
+    } catch (Exception e) {
+      System.err.printf("An error occured while moving the directory: %s\n", e.getMessage());
+    }
+  }
+
+  /*
+   * Copy a directory
+   *
+   * @param src A String holding the path to the diretory to copy
+   *
+   * @param dest A String holding the location for the copy of the directory
+   */
+  public static void copyDirectory(String src, String dest) {
+    try {
+      Files.walk(Paths.get(src))
+          .forEach(source -> {
+            Path destination = Paths.get(dest, source.toString()
+                .substring(src.length()));
+            try {
+              Files.copy(source, destination);
+            } catch (IOException e) {
+              System.out.println("An error occured while copying the directory:");
+              e.printStackTrace();
+            }
+          });
+      System.out.printf("Successfully copied the directory from %s to %s!\n", src, dest);
+    } catch (IOException e) {
+      System.out.println("An error occurred while copying the directory:");
+      e.printStackTrace();
     }
   }
 }

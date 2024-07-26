@@ -19,13 +19,14 @@ to read.
 
 ### Features
 
-- File Creation: Create a file from a path to the file
-- File Deletion: Delete a file from a path to the file
-- File Reading: Read a file from a path to the file
-- File Writing: Write content to a file using a String from your code
-- Erase Content: Completely wipe the content of a file
-- File Renaming: Rename a file
-- File moving: Move a file
+- File Creation
+- File Deletion
+- File Reading
+- File Writing
+- File Renaming
+- File moving
+- Copy a file
+- Erase Content of a file
 
 ### Usage
 
@@ -139,15 +140,20 @@ public class Example {
 }
 ```
 
-### Acknowledgements
+To copy a file, you can use the **copyFile()** method. This method takes in a
+String `src` and a String `dest` to know what file to copy where.
 
-I did not write most of the methods myself, I modified some from code I learned
-on GeeksForGeeks and W3School and another method was written by my friend
-[Suchith Sridhar](https://github.com/SuchithSridhar).
+```java
+import GSLib.Utilities.FileManager;
 
-_Suchith_ wrote the `readFile()` method.
-_W3School_ wrote the original code for the `createFile()` and `writeToFile()` methods.
-_GeekForGeeks_ wrote the original code for both delete methods.
+public class Example {
+  void main() {
+    String src = "path/to/original/file";
+    String dest = "path/to/copy/destination";
+    FileManager.copyFile(src, dest);
+  }
+}
+```
 
 ## Directory Manager
 
@@ -249,6 +255,12 @@ public class Example {
 }
 ```
 
-### Acknowledgements
+## Acknowledgements
 
-This section will be written soon
+Some of the methods are not original, rather, some are modified piece of code
+from friends or online resources, which I have linked below.
+
+- [GeeksForGeeks](https://www.geeksforgeeks.org/),
+- [W3Schools](https://www.w3schools.com/),
+- [Suchith Sridhar](https://github.com/SuchithSridhar),
+- [Baeldung](https://https://www.baeldung.com/).
