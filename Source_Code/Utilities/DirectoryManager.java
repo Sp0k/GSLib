@@ -3,7 +3,7 @@
  *   ███░░░░░███ ███░░░░░███        Directory Manager
  *  ███     ░░░ ░███    ░░░
  * ░███         ░░█████████         @author Gab 'Sp0k' Savard
- * ░███    █████ ░░░░░░░░███        @version 1.0
+ * ░███    █████ ░░░░░░░░███        @version 1.1
  * ░░███  ░░███  ███    ░███        since 2024-07-25
  *  ░░█████████ ░░█████████
  *   ░░░░░░░░░   ░░░░░░░░░
@@ -119,6 +119,62 @@ public class DirectoryManager {
       }
     } catch (Exception e) {
       System.err.printf("An error occurred while deleting subdirectories: %s\n", e.getMessage());
+    }
+  }
+
+  /*
+   * Rename directory
+   *
+   * @param directoryName A String containing the path to the directory
+   *
+   * @param newName A String containing the new name to the directory
+   */
+  public static void renameDirectory(String directoryName, String newName) {
+    // Directory path
+    String[] splitName = directoryName.split(File.separator);
+    splitName[splitName.length - 1] = newName;
+
+    StringBuilder builder = new StringBuilder();
+
+    for (int i = 0; i < splitName.length; i++) {
+      builder.append(splitName[i]);
+      if ((i + 1) < (splitName.length - 1))
+        builder.append(File.separator);
+    }
+
+    File d = new File(directoryName);
+    File newDir = new File(builder.toString());
+
+    if (d.renameTo(newDir)) {
+      System.out.printf("Successfully renamed directory to %s!\n", d.getName());
+    } else {
+      System.out.printf("Failed to rename the directory at %s\n", d.getPath());
+    }
+  }
+
+  /*
+   * Move a directory
+   *
+   * @param directoryName A String containing the path to the directory
+   *
+   * @param dest A String containing the path the new location
+   */
+  public static void moveDirectory(String directoryName, String dest) {
+    // Directory path
+    String[] splitName = directoryName.split(File.separator);
+    StringBuilder builder = new StringBuilder(dest);
+    if (dest.charAt(dest.length() - 1) != File.separatorChar)
+      builder.append(File.separator);
+    builder.append(splitName[splitName.length - 1]);
+
+    // Locate the directory
+    File d = new File(directoryName);
+    File newDir = new File(builder.toString());
+
+    if (d.renameTo(newDir)) {
+      System.out.printf("Successfully moved directory to %s!\n", newDir.getPath());
+    } else {
+      System.out.printf("Failed to file the directory at %s\n", newDir.getPath());
     }
   }
 }

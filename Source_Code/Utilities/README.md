@@ -8,9 +8,9 @@ for managing various things in your code. So far, I have these classes created:
 
 ## File Manager
 
-The File Manager package contains methods I use for managing files in my code.
+The File Manager class contains methods I use for managing files in my code.
 The more projects I do and the bigger they get, the more I find myself
-rewriting these methods into my code. This package is the reason I started
+rewriting these methods into my code. This class is the reason I started
 working on this library. My goal in having this class is to replace the need
 of having multiple File objects in my code to keep tracks of my files. Instead,
 I get to use most of the File class methods through static method calls, which
@@ -151,10 +151,10 @@ _GeekForGeeks_ wrote the original code for both delete methods.
 
 ## Directory Manager
 
-The Directory Manager is the second package I decided to write, once I had time
+The Directory Manager is the second class I decided to write, once I had time
 to focus on the project again. Having a manager for my files, I thought that on
 bigger projects I might want to be able to also manage the directories for my
-data. This lead to this package. I also like this package because there is over
+data. This lead to this class. I also like this class because there is over
 6 months between this one and File Manager, and the difference between the
 understanding of what I'm doing and the quality of work is huge.
 
@@ -162,8 +162,8 @@ understanding of what I'm doing and the quality of work is huge.
 
 - Directory Creation (in the current directory and in a specified location)
 - Directory Deletion
-
-More methods will be coming soon, like moving directories, and renaming them.
+- Directory renaming
+- Move Directory
 
 ### Usage
 
@@ -196,7 +196,7 @@ import GSLib.Utilities.DirectoryManager;
 public class Example {
   void main() {
     String directoryName = "newDirectory";
-    String directoryPath = "/path/for/new/directory/location";
+    String directoryPath = "path/for/new/directory/location";
     DirectoryManager.newDirectory(directoryName, directoryPath);
   }
 }
@@ -211,8 +211,40 @@ import GSLib.Utilities.DirectoryManager;
 
 public class Example {
   void main() {
-    String directoryPath = "/path/to/your/directory";
+    String directoryPath = "path/to/your/directory";
     DirectoryManager.deleteDirectory(directoryPath);
+  }
+}
+```
+
+To rename a directory, you can use the **renameDirectory()** method. This method
+takes a String `directoryName` which specifies the path to the directory and a
+String `newName` which specifies the new name for the directory.
+
+```java
+import GSLib.Utilities.DirectoryManager;
+
+public class Example {
+  void main() {
+    String directoryName = "path/to/your/directory";
+    String newName = "renamedDirectory";
+    DirectoryManager.renameDirectory(directoryName, newName);
+  }
+}
+```
+
+To move a directory, you can use the **moveDirectory()** method. This method
+takes a String `directoryName` which specifies the path to the directory and a
+String `dest` which specifies the new location for the directory;
+
+```java
+import GSLib.Utilities.DirectoryManager;
+
+public class Example {
+  void main() {
+    String directoryName = "path/to/your/directory";
+    String dest = "path/to/new/location";
+    DirectoryManager.moveDirectory(directoryName, dest);
   }
 }
 ```

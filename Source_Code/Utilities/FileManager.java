@@ -159,6 +159,8 @@ public class FileManager {
     // File path
     String[] splitName = filename.split(File.pathSeparator);
     StringBuilder builder = new StringBuilder(dest);
+    if (dest.charAt(dest.length() - 1) != File.separatorChar)
+      builder.append(File.separator);
     builder.append(splitName[splitName.length - 1]);
 
     // Locate the file
