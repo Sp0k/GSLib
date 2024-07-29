@@ -42,8 +42,8 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    String filename = "path/to/your/file"; // If you are using windows, replace / with \\
-    FileManager.newFile(filename);
+    String filepath = "path/to/your/file"; // If you are using windows, replace / with \\
+    FileManager.newFile(filepath);
   }
 }
 ```
@@ -57,8 +57,8 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    String filename = "path/to/your/file";
-    String file = FileManager.readFile(filename);
+    String filepath = "path/to/your/file";
+    String file = FileManager.readFile(filepath);
   }
 }
 ```
@@ -73,9 +73,9 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    String filename = "path/to/your/file";
+    String filepath = "path/to/your/file";
     String content = "Hello, World! This is my message!";
-    FileManager.writeToFile(filename, content);
+    FileManager.writeToFile(filepath, content);
   }
 }
 ```
@@ -89,8 +89,8 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    String filename = "path/to/your/file";
-    FileManager.eraseContent(filename);
+    String filepath = "path/to/your/file";
+    FileManager.eraseContent(filepath);
   }
 }
 ```
@@ -103,8 +103,8 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    String filename = "path/to/your/file";
-    FileManager.deleteFile(filename);
+    String filepath = "path/to/your/file";
+    FileManager.deleteFile(filepath);
   }
 }
 ```
@@ -118,8 +118,8 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    String filename = "path/to/your/file";
-    FileManager.renameFile(filename, "newName");
+    String filepath = "path/to/your/file";
+    FileManager.renameFile(filepath, "newName");
   }
 }
 ```
@@ -133,9 +133,9 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    String filename = "path/to/your/file";
+    String filepath = "path/to/your/file";
     String dest = "new/destination/";
-    FileManager.moveFile(filename, dest);
+    FileManager.moveFile(filepath, dest);
   }
 }
 ```
@@ -148,9 +148,9 @@ import GSLib.Utilities.FileManager;
 
 public class Example {
   void main() {
-    String src = "path/to/original/file";
+    String filepath = "path/to/original/file";
     String dest = "path/to/copy/destination";
-    FileManager.copyFile(src, dest);
+    FileManager.copyFile(filepath, dest);
   }
 }
 ```
@@ -185,8 +185,8 @@ import GSLib.Utilities.DirectoryManager;
 
 public class Example {
   void main() {
-    String directoyName = "newDirectory";
-    DirectoryManager.newDirectory(directoryName);
+    String dirName = "newDirectory";
+    DirectoryManager.newDirectory(dirName);
   }
 }
 ```
@@ -203,7 +203,7 @@ public class Example {
   void main() {
     String directoryName = "newDirectory";
     String directoryPath = "path/for/new/directory/location";
-    DirectoryManager.newDirectory(directoryName, directoryPath);
+    DirectoryManager.newDirectory(dirName, dirPath);
   }
 }
 ```
@@ -217,8 +217,8 @@ import GSLib.Utilities.DirectoryManager;
 
 public class Example {
   void main() {
-    String directoryPath = "path/to/your/directory";
-    DirectoryManager.deleteDirectory(directoryPath);
+    String dirPath = "path/to/your/directory";
+    DirectoryManager.deleteDirectory(dirPath);
   }
 }
 ```
@@ -232,9 +232,9 @@ import GSLib.Utilities.DirectoryManager;
 
 public class Example {
   void main() {
-    String directoryName = "path/to/your/directory";
+    String dirPath = "path/to/your/directory";
     String newName = "renamedDirectory";
-    DirectoryManager.renameDirectory(directoryName, newName);
+    DirectoryManager.renameDirectory(dirPath, newName);
   }
 }
 ```
@@ -248,9 +248,24 @@ import GSLib.Utilities.DirectoryManager;
 
 public class Example {
   void main() {
-    String directoryName = "path/to/your/directory";
+    String dirPath = "path/to/your/directory";
     String dest = "path/to/new/location";
-    DirectoryManager.moveDirectory(directoryName, dest);
+    DirectoryManager.moveDirectory(dirPath, dest);
+  }
+}
+```
+
+To copy a directory, you can use the **copyDirectory()** method. This method takes in a
+String `src` and a String `dest` to know what file to copy where.
+
+```java
+import GSLib.Utilities.DirectoryManager;
+
+public class Example {
+  void main() {
+    String directoryPath = "path/to/original/file";
+    String dest = "path/to/copy/destination";
+    DirectoryManager.copyDirectory(dirPath, dest);
   }
 }
 ```

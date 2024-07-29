@@ -3,7 +3,7 @@
  *   ███░░░░░███ ███░░░░░███        File Manager
  *  ███     ░░░ ░███    ░░░
  * ░███         ░░█████████         @author Gab 'Sp0k' Savard
- * ░███    █████ ░░░░░░░░███        @version 1.4
+ * ░███    █████ ░░░░░░░░███        @version 1.5
  * ░░███  ░░███  ███    ░███        since 2023-10-13
  *  ░░█████████ ░░█████████
  *   ░░░░░░░░░   ░░░░░░░░░
@@ -27,11 +27,11 @@ public class FileManager {
   /*
    * Create a new File
    *
-   * @param filename A String holding the path for the new file
+   * @param filepath A String holding the path for the new file
    */
-  public static void newFile(String filename) {
+  public static void newFile(String filepath) {
     try {
-      File f = new File(filename);
+      File f = new File(filepath);
       if (f.createNewFile()) {
         System.out.printf("File created: %s\npath: %s\n", f.getName(), f.getAbsolutePath());
       } else {
@@ -46,12 +46,12 @@ public class FileManager {
   /*
    * Read files
    *
-   * @param filename A String holding the path of the file
+   * @param filepath A String holding the path of the file
    *
    * @return String containing the text contained in the file
    */
-  public static String readFile(String filename) {
-    File f = new File(filename);
+  public static String readFile(String filepath) {
+    File f = new File(filepath);
     java.util.Scanner reader = null;
     String lines = "";
 
@@ -73,13 +73,13 @@ public class FileManager {
   /*
    * Write to a file
    *
-   * @param filename A String holding the path of the file
+   * @param filepath A String holding the path of the file
    *
    * @param text A String holding the text to add to the file
    */
-  public static void writeToFile(String filename, String text) {
+  public static void writeToFile(String filepath, String text) {
     try {
-      FileWriter w = new FileWriter(filename);
+      FileWriter w = new FileWriter(filepath);
       w.write(text);
       w.close();
     } catch (IOException e) {
@@ -91,11 +91,11 @@ public class FileManager {
   /*
    * Erase the content of a file
    *
-   * @param filename A String holding the path of the file
+   * @param filepath A String holding the path of the file
    */
-  public static void eraseContent(String filename) {
+  public static void eraseContent(String filepath) {
     // Replace the file's content with an empty string
-    try (PrintWriter pw = new PrintWriter(filename)) {
+    try (PrintWriter pw = new PrintWriter(filepath)) {
     } catch (IOException e) {
       System.out.println("An error occured");
       e.printStackTrace();
@@ -105,12 +105,12 @@ public class FileManager {
   /*
    * Delete a file
    *
-   * @param filename A String holding the path of the file
+   * @param filepath A String holding the path of the file
    */
-  public static void deleteFile(String filename) {
+  public static void deleteFile(String filepath) {
     try {
       // Locate the file
-      File f = new File(filename);
+      File f = new File(filepath);
 
       // Delete the file
       if (f.delete()) {
@@ -126,14 +126,14 @@ public class FileManager {
   /*
    * Rename a file
    *
-   * @param filename A String holding the path to the file
+   * @param filepath A String holding the path to the file
    *
    * @param newName A String holding the new name of the file
    */
-  public static void renameFile(String filename, String newName) {
+  public static void renameFile(String filepath, String newName) {
     try {
       // File path
-      String[] splitName = filename.split(File.pathSeparator);
+      String[] splitName = filepath.split(File.pathSeparator);
       splitName[splitName.length - 1] = newName;
 
       StringBuilder builder = new StringBuilder();
@@ -145,7 +145,7 @@ public class FileManager {
       }
 
       // Locate the file
-      File f = new File(filename);
+      File f = new File(filepath);
       File dest = new File(builder.toString());
 
       // Rename the file
@@ -162,21 +162,21 @@ public class FileManager {
   /*
    * Move a file
    *
-   * @param filename A String holding the path to the file
+   * @param filepath A String holding the path to the file
    *
    * @param dest A String holding the new location
    */
-  public static void moveFile(String filename, String dest) {
+  public static void moveFile(String filepath, String dest) {
     try {
       // File path
-      String[] splitName = filename.split(File.pathSeparator);
+      String[] splitName = filepath.split(File.pathSeparator);
       StringBuilder builder = new StringBuilder(dest);
       if (dest.charAt(dest.length() - 1) != File.separatorChar)
         builder.append(File.separator);
       builder.append(splitName[splitName.length - 1]);
 
       // Locate the file
-      File f = new File(filename);
+      File f = new File(filepath);
       File fileDest = new File(builder.toString());
 
       if (f.renameTo(fileDest)) {
@@ -192,13 +192,13 @@ public class FileManager {
   /*
    * Copy a file
    *
-   * @param src A String holding the path to the original file
+   * @param filepath A String holding the path to the original file
    *
    * @param dest A String holding the path to the copy of the file
    */
-  public static void copyFile(String src, String dest) {
+  public static void copyFile(String filepath, String dest) {
     try {
-      Path fromFile = Paths.get(src);
+      Path fromFile = Paths.get(filepath);
       Path toFile = Paths.get(dest);
 
       if (Files.notExists(fromFile)) {

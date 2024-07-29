@@ -3,7 +3,7 @@
  *   ███░░░░░███ ███░░░░░███        Directory Manager
  *  ███     ░░░ ░███    ░░░
  * ░███         ░░█████████         @author Gab 'Sp0k' Savard
- * ░███    █████ ░░░░░░░░███        @version 1.2
+ * ░███    █████ ░░░░░░░░███        @version 1.3
  * ░░███  ░░███  ███    ░███        since 2024-07-25
  *  ░░█████████ ░░█████████
  *   ░░░░░░░░░   ░░░░░░░░░
@@ -23,24 +23,24 @@ public class DirectoryManager {
   /*
    * Create new directory (in the current directory)
    *
-   * @param directoryName A String containing the name of the new directory
+   * @param dirName A String containing the name of the new directory
    */
-  public static void newDirectory(String directoryName) {
+  public static void newDirectory(String dirName) {
     try {
       // Address of current directory
-      String currentDirectory = System.getProperty("user.dir");
+      String currDirectory = System.getProperty("user.dir");
 
       // Path of the directory to be created
-      String directoryPath = currentDirectory + File.separator + directoryName;
+      String dirPath = currDirectory + File.separator + dirName;
 
       // File object to hold the directory
-      File d = new File(directoryPath);
+      File d = new File(dirPath);
 
       // Create new directory
       if (d.mkdir()) {
         System.out.printf("Successfully created %s!\nPath: %s\n", d.getName(), d.getPath());
       } else {
-        System.out.printf("Failed to create the directory. It may already exist at: %s\n", directoryPath);
+        System.out.printf("Failed to create the directory. It may already exist at: %s\n", dirPath);
       }
     } catch (Exception e) {
       System.err.printf("An error occurred while creating the directory: %s\n", e.getMessage());
@@ -50,25 +50,25 @@ public class DirectoryManager {
   /*
    * Create new directory (inside other directories)
    *
-   * @param directoryName A String containing the name of the new directory
+   * @param dirName A String containing the name of the new directory
    *
-   * @param directoryPath A String containing the path for the new directory's
+   * @param dirPath A String containing the path for the new directory's
    * location
    */
-  public static void newDirectory(String directoryName, String directoryPath) {
+  public static void newDirectory(String dirName, String dirPath) {
     try {
       // Path of the new directory
-      String dirPath = (directoryPath.charAt(directoryPath.length() - 1) == '/') ? directoryPath + directoryName
-          : directoryPath + File.separator + directoryName;
+      String path = (dirPath.charAt(dirPath.length() - 1) == File.separatorChar) ? dirPath + dirName
+          : dirPath + File.separator + dirName;
 
       // File object to hold the directory
-      File d = new File(dirPath);
+      File d = new File(path);
 
       // Create new directory
       if (d.mkdir()) {
         System.out.printf("Successfully created %s!\nPath: %s\n", d.getName(), d.getPath());
       } else {
-        System.out.printf("Failed to create the directory. It may already exist at: %s\n", directoryPath);
+        System.out.printf("Failed to create the directory. It may already exist at: %s\n", dirPath);
       }
     } catch (Exception e) {
       System.err.printf("An error occurred while creating the directory: %s\n", e.getMessage());
@@ -129,14 +129,14 @@ public class DirectoryManager {
   /*
    * Rename directory
    *
-   * @param directoryName A String containing the path to the directory
+   * @param dirPath A String containing the path to the directory
    *
    * @param newName A String containing the new name to the directory
    */
-  public static void renameDirectory(String directoryName, String newName) {
+  public static void renameDirectory(String dirPath, String newName) {
     try {
       // Directory path
-      String[] splitName = directoryName.split(File.separator);
+      String[] splitName = dirPath.split(File.separator);
       splitName[splitName.length - 1] = newName;
 
       StringBuilder builder = new StringBuilder();
@@ -147,7 +147,7 @@ public class DirectoryManager {
           builder.append(File.separator);
       }
 
-      File d = new File(directoryName);
+      File d = new File(dirPath);
       File newDir = new File(builder.toString());
 
       if (d.renameTo(newDir)) {
@@ -163,21 +163,21 @@ public class DirectoryManager {
   /*
    * Move a directory
    *
-   * @param directoryName A String containing the path to the directory
+   * @param dirPath A String containing the path to the directory
    *
    * @param dest A String containing the path the new location
    */
-  public static void moveDirectory(String directoryName, String dest) {
+  public static void moveDirectory(String dirPath, String dest) {
     try {
       // Directory path
-      String[] splitName = directoryName.split(File.separator);
+      String[] splitName = dirPath.split(File.separator);
       StringBuilder builder = new StringBuilder(dest);
       if (dest.charAt(dest.length() - 1) != File.separatorChar)
         builder.append(File.separator);
       builder.append(splitName[splitName.length - 1]);
 
       // Locate the directory
-      File d = new File(directoryName);
+      File d = new File(dirPath);
       File newDir = new File(builder.toString());
 
       if (d.renameTo(newDir)) {
