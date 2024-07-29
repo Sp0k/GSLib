@@ -1,0 +1,5 @@
+# Ignore the tests
+Tests/
+
+# Ignore the Releases directory
+Releases/

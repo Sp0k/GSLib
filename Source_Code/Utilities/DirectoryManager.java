@@ -1,16 +1,3 @@
-/*
- *    █████████   █████████
- *   ███░░░░░███ ███░░░░░███        Directory Manager
- *  ███     ░░░ ░███    ░░░
- * ░███         ░░█████████         @author Gab 'Sp0k' Savard
- * ░███    █████ ░░░░░░░░███        @version 1.3
- * ░░███  ░░███  ███    ░███        since 2024-07-25
- *  ░░█████████ ░░█████████
- *   ░░░░░░░░░   ░░░░░░░░░
- *
- *  @description: Directory Management methods. This class holds methods for
- *  creating, deleting and navigating through directories
- */
 package GSLib.Utilities;
 
 import java.io.File;
@@ -19,9 +6,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Utility class for directory management operations such as creating,
+ * deleting, renaming, moving, and copying directories.
+ * <p>
+ * This class provides static methods to perform various directory operations,
+ * making it easier to handle directories within your application.
+ * </p>
+ *
+ * @author Gab 'Sp0k' Savard
+ * @version 1.3
+ * @since 2024-07-25
+ */
 public class DirectoryManager {
-  /*
-   * Create new directory (in the current directory)
+
+  /**
+   * Creates a new directory (in the current directory)
    *
    * @param dirName A String containing the name of the new directory
    */
@@ -47,13 +47,13 @@ public class DirectoryManager {
     }
   }
 
-  /*
-   * Create new directory (inside other directories)
+  /**
+   * Creates a new directory (at a specified location)
    *
    * @param dirName A String containing the name of the new directory
    *
    * @param dirPath A String containing the path for the new directory's
-   * location
+   *                location
    */
   public static void newDirectory(String dirName, String dirPath) {
     try {
@@ -75,8 +75,8 @@ public class DirectoryManager {
     }
   }
 
-  /*
-   * Delete directory
+  /**
+   * Deletes a specified directory
    *
    * This method deletes the specified directory and everything it holds
    *
@@ -101,14 +101,16 @@ public class DirectoryManager {
     }
   }
 
-  /*
-   * Delete sub directory
+  /**
+   * Deletes the subdirectories and files of a specified directory.
+   * <p>
+   * This method takes care of deleting the subdirectories and files within
+   * the specified directory. It is private as there is no reason to access it
+   * from outside the class.
+   * </p>
    *
-   * This method takes care of deleting the subdirectories. It is private as there
-   * is no reason to access it from the code.
-   *
-   * @param dir A File containing the directory for which to delete all of the
-   * subdirectories
+   * @param dir A File representing the directory for which to delete all
+   *            subdirectories and files
    */
   private static void deleteSubDirectory(File dir) {
     try {
@@ -126,8 +128,8 @@ public class DirectoryManager {
     }
   }
 
-  /*
-   * Rename directory
+  /**
+   * Rename a specified directory
    *
    * @param dirPath A String containing the path to the directory
    *
@@ -160,12 +162,12 @@ public class DirectoryManager {
     }
   }
 
-  /*
-   * Move a directory
+  /**
+   * Moves a specified directory
    *
    * @param dirPath A String containing the path to the directory
    *
-   * @param dest A String containing the path the new location
+   * @param dest    A String containing the path the new location
    */
   public static void moveDirectory(String dirPath, String dest) {
     try {
@@ -190,19 +192,19 @@ public class DirectoryManager {
     }
   }
 
-  /*
-   * Copy a directory
+  /**
+   * Copies a specified directory
    *
-   * @param src A String holding the path to the diretory to copy
+   * @param dirPath A String holding the path to the diretory to copy
    *
-   * @param dest A String holding the location for the copy of the directory
+   * @param dest    A String holding the location for the copy of the directory
    */
-  public static void copyDirectory(String src, String dest) {
+  public static void copyDirectory(String dirPath, String dest) {
     try {
-      Files.walk(Paths.get(src))
+      Files.walk(Paths.get(dirPath))
           .forEach(source -> {
             Path destination = Paths.get(dest, source.toString()
-                .substring(src.length()));
+                .substring(dirPath.length()));
             try {
               Files.copy(source, destination);
             } catch (IOException e) {
@@ -210,7 +212,7 @@ public class DirectoryManager {
               e.printStackTrace();
             }
           });
-      System.out.printf("Successfully copied the directory from %s to %s!\n", src, dest);
+      System.out.printf("Successfully copied the directory from %s to %s!\n", dirPath, dest);
     } catch (IOException e) {
       System.out.println("An error occurred while copying the directory:");
       e.printStackTrace();

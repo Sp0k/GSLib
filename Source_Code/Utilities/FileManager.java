@@ -1,16 +1,3 @@
-/*
- *    █████████   █████████
- *   ███░░░░░███ ███░░░░░███        File Manager
- *  ███     ░░░ ░███    ░░░
- * ░███         ░░█████████         @author Gab 'Sp0k' Savard
- * ░███    █████ ░░░░░░░░███        @version 1.5
- * ░░███  ░░███  ███    ░███        since 2023-10-13
- *  ░░█████████ ░░█████████
- *   ░░░░░░░░░   ░░░░░░░░░
- *
- *  @description: File management methods. This class holds methods to simplify
- *  the creation, deletion and use of files.
- */
 package GSLib.Utilities;
 
 import java.io.File;
@@ -23,9 +10,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Utility class for file management operations such as creating, reading,
+ * writing, erasing, deleting, renaming, moving, and copying files.
+ * <p>
+ * This class provides static methods to perform various file operations,
+ * making it easier to handle files within your application.
+ * </p>
+ *
+ * @author Gab 'Sp0k' Savard
+ * @version 1.5
+ * @since 2023-10-13
+ */
 public class FileManager {
-  /*
-   * Create a new File
+
+  /**
+   * Creates a new file at a specified location
    *
    * @param filepath A String holding the path for the new file
    */
@@ -43,12 +43,12 @@ public class FileManager {
     }
   }
 
-  /*
-   * Read files
+  /**
+   * Read a specified file
    *
    * @param filepath A String holding the path of the file
    *
-   * @return String containing the text contained in the file
+   * @return A String containing the text contained in the file
    */
   public static String readFile(String filepath) {
     File f = new File(filepath);
@@ -70,12 +70,12 @@ public class FileManager {
     return lines;
   }
 
-  /*
-   * Write to a file
+  /**
+   * Write content to a specifiec file
    *
    * @param filepath A String holding the path of the file
    *
-   * @param text A String holding the text to add to the file
+   * @param text     A String holding the text to add to the file
    */
   public static void writeToFile(String filepath, String text) {
     try {
@@ -88,8 +88,8 @@ public class FileManager {
     }
   }
 
-  /*
-   * Erase the content of a file
+  /**
+   * Erase the content of a specified file
    *
    * @param filepath A String holding the path of the file
    */
@@ -102,8 +102,8 @@ public class FileManager {
     }
   }
 
-  /*
-   * Delete a file
+  /**
+   * Delete a specified file
    *
    * @param filepath A String holding the path of the file
    */
@@ -123,12 +123,12 @@ public class FileManager {
     }
   }
 
-  /*
-   * Rename a file
+  /**
+   * Rename a specified file
    *
    * @param filepath A String holding the path to the file
    *
-   * @param newName A String holding the new name of the file
+   * @param newName  A String holding the new name of the file
    */
   public static void renameFile(String filepath, String newName) {
     try {
@@ -159,12 +159,12 @@ public class FileManager {
     }
   }
 
-  /*
-   * Move a file
+  /**
+   * Move a specified file to a new location
    *
    * @param filepath A String holding the path to the file
    *
-   * @param dest A String holding the new location
+   * @param dest     A String holding the new location
    */
   public static void moveFile(String filepath, String dest) {
     try {
@@ -189,12 +189,12 @@ public class FileManager {
     }
   }
 
-  /*
-   * Copy a file
+  /**
+   * Copy a specified file to a new location
    *
    * @param filepath A String holding the path to the original file
    *
-   * @param dest A String holding the path to the copy of the file
+   * @param dest     A String holding the path to the copy of the file
    */
   public static void copyFile(String filepath, String dest) {
     try {
